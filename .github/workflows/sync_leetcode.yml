@@ -1,0 +1,20 @@
+name: Sync LeetCode
+
+on:
+  workflow_dispatch:      # Allows manual "Run workflow" button
+  schedule:
+    - cron: "0 3 * * *"   # Runs every day at 03:00 UTC (08:00 Pakistan Time)
+
+jobs:
+  sync:
+    runs-on: windows-latest
+    steps:
+      - name: Sync LeetCode Submissions
+        uses: joshcai/leetcode-sync@v1.7
+        with:
+          github-token: ${{ github.token }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          destination-folder: "leetcode"
+          verbose: true
+          commit-header: "[LeetCode Sync]"
